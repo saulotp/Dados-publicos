@@ -1,4 +1,5 @@
-from dash import Dash, html, dcc
+from click import option
+from dash import Dash, html, dcc, Input, Output
 import plotly.express as px
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -18,10 +19,15 @@ colors = {
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 df = pd.read_csv('db_publicdata.csv')
-df = df.loc[df['nome'] == 'Abílio Santana']
-df = df[[ 'valorDocumento', 'tipoDespesa']].groupby('tipoDespesa').sum().reset_index()
-df = df.sort_values(by='valorDocumento', ascending=False)
-df = df.head(10)
+dfdep = df.loc[df['nome'] == 'Abílio Santana']
+dfdep = dfdep[[ 'valorDocumento', 'tipoDespesa']].groupby('tipoDespesa').sum().reset_index()
+dfdep = dfdep.sort_values(by='valorDocumento', ascending=False)
+dfdep = dfdep.head(10)
+
+## dropdown options
+options = list(df['nome'].unique())
+options.append('Todos')
+
 
 
 
@@ -42,17 +48,28 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
             'color': colors['text']
         }
     ),
+    
+    
 
     html.Div(children='Dash: A web application framework for your data.', style={
         'textAlign': 'center',
         'color': colors['text']
     }),
-
+    dcc.Dropdown(options, value='todos', id='demo-dropdown'),
+    html.Div(id='dd-output-container'),
     dcc.Graph(
         id='example-graph-2',
         figure=fig
     )
 ])
+
+@app.callback(
+    Output('dd-output-container', 'children'),
+    Input('demo-dropdown', 'value')
+)
+
+def update_output(value):
+    return f'You have selected {value}'
 
 if __name__ == '__main__':
     app.run_server(debug=True)
