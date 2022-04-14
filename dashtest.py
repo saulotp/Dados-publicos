@@ -33,7 +33,7 @@ firstplot = df[[ 'valorDocumento', 'tipoDespesa']].groupby('tipoDespesa').sum().
 #fig = px.bar(df, x="tipoDespesa", y="valorDocumento", text_auto=True, orientation='h')
 
 
-fig = px.bar(df, x="valorDocumento", y="tipoDespesa", text_auto=True, orientation='h')
+fig = px.bar(df, x="valorDocumento", y="tipoDespesa", text_auto=True, orientation='h', height=400, width=1000)
 #fig.update_yaxes(visible=False, showticklabels=False)
 
 
@@ -92,7 +92,8 @@ def render_page_content(pathname):
         ## page 1 begin
         return  html.Div([
                     html.Div(children=[
-                        html.Label('1'),
+                        html.Label('Deputados'),
+                        dcc.Dropdown(dfdep, id='dropdown', value='Abílio Santana', multi=False),
                         
                     ],style={'width': '100%', 'height': '300px', 'background-color': '#00ff00', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center', 'align-items': 'center'}),
                     
@@ -105,7 +106,14 @@ def render_page_content(pathname):
                         html.Label('3'),
                         
                     ], style={'width': '100%', 'height': '300px', 'background-color': '#ffff00', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center', 'align-items': 'center'}),
-                ], style={'width': '100%', 'height': '100%', 'background-color': '#ff0000', 'display': 'flex'})
+                ], style={'width': '100%', 'height': '100%', 'background-color': '#ff0000', 'display': 'flex'}), html.Div(children=[
+                                                                                                                    html.Label('teste'),
+                                                                                                                    dcc.Graph(id='graph_1',figure=fig),
+                ], style={'width': '100%', 'height': '400px', 'background-color': '#00ffff', 'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center', 'align-items': 'center'}),
+       
+        ## page 1 end
+               
+                    
                
                     
 ## END
@@ -121,21 +129,20 @@ def render_page_content(pathname):
             html.P(f"The pathname {pathname} was not recognised..."),
         ]
     )
+## dropdown callback
 @app.callback(
     Output('graph_1', 'figure'),
     Input('dropdown', 'value')
     )
+
 def update_output(value):
     if value == 'Todos':
-       fig = px.bar(df, x="valorDocumento", y="tipoDespesa", text_auto=True, orientation='h')        
-      # fig.update_yaxes(visible=False, showticklabels=False)
+       fig = px.bar(df, x="valorDocumento", y="tipoDespesa", text_auto=True, orientation='h')     
     else:
         dffilter = df.loc[df['nome'] == value, ['valorDocumento', 'tipoDespesa']]
-        dffilter = dffilter[[ 'valorDocumento', 'tipoDespesa']].groupby('tipoDespesa').sum().reset_index()
-        #dffilter = dffilter.sort_values(by='valorDocumento', ascending=True)
-        #dffilter = dffilter.head(10)
+        dffilter = dffilter[[ 'valorDocumento', 'tipoDespesa']].groupby('tipoDespesa').sum().reset_index()        
         fig = px.bar(dffilter, x="valorDocumento", y="tipoDespesa", text_auto=True, orientation='h')  
-       # fig.update_yaxes(visible=False, showticklabels=False)
+       
 
     return fig
 
