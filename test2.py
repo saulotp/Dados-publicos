@@ -94,12 +94,12 @@ def render_page_content(pathname):
                     html.Div(children=[
                         html.Label('Deputados'),
                         dcc.Dropdown(dfdep, id='dropdown', value='Abílio Santana', multi=False),
-                    ],style={'padding': 10, 'flex': 1}),
+                    ],style={'width: 100%', 'height: 300px', 'background-color: #00ff00', 'display: flex', 'flex-direction: column', 'justify-content: center', 'align-items: center'}),
                     
                     html.Div(children=[        
                         html.Label('teste'),
-                        dcc.Graph(id='graph_1',figure=fig),                        
-                    ], style={'padding': 10, 'flex': 1}),
+                        #dcc.Graph(id='graph_1',figure=fig),                        
+                    ], style={'width: 100%', 'height: 300px', 'background-color: #0000ff', 'display: flex', 'flex-direction: column', 'justify-content: center', 'align-items: center'}),
 
                     html.Div(children=[
                         html.Label('Checkboxes'),
@@ -119,8 +119,9 @@ def render_page_content(pathname):
                             marks={i: f'Label {i}' if i == 1 else str(i) for i in range(1, 6)},
                             value=5,
                         ),
-                    ], style={'padding': 10, 'flex': 1})
-                ], style={'display': 'flex', 'flex-direction': 'row'})
+                    ], style={'width: 100%', 'height: 300px', 'background-color: #ffff00', 'display: flex', 'flex-direction: column', 'justify-content: center', 'align-items: center'}),
+                ], style={'width: 100%', 'height: 100%', 'background-color: #ff0000', 'display: flex'})
+               
                     
 ## END
     elif pathname == "/page-1":
