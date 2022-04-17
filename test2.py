@@ -98,7 +98,7 @@ def render_page_content(pathname):
                     
                     html.Div(children=[        
                         html.Label('teste'),
-                        #dcc.Graph(id='graph_1',figure=fig),                        
+                        dcc.Graph(id='graph_1',figure=fig),                        
                     ], style={'width: 100%', 'height: 300px', 'background-color: #0000ff', 'display: flex', 'flex-direction: column', 'justify-content: center', 'align-items: center'}),
 
                     html.Div(children=[
