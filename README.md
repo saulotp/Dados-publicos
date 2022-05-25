@@ -13,3 +13,6 @@ https://docs.sqlalchemy.org/en/14/core/engines.html
 
 ## CONNECTING TO THE DATABASE DBEAVER
 #https://gregpoked.medium.com/connecting-dbeaver-to-oracle-free-cloud-tier-database-with-keyfiles-ed835f990031
+
+## CONECTING POWER BI IN AUTONOMOUS DATABASE ORACLE
+https://docs.microsoft.com/en-us/power-query/connectors/oracledatabase
